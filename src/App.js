@@ -9,7 +9,7 @@ function App() {
   // Function to handle search
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`http://localhost:3030/manga/${searchQuery}`);
+      const response = await axios.get(`http://10.10.0.235:3030/manga/${searchQuery}`);
       setMangaResults(response.data);
       console.log(response.data[1])
       setError(null);
