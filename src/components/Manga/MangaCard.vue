@@ -1,19 +1,23 @@
+<template>
+    <router-link class="card" :to="{ name: 'Manga', params: { id: manga.id_manga  } }">
+        <img :src="image_link" alt="Manga Image" />
+        <div class="title">{{ title }}</div>
+    </router-link>
+</template>
+
 <script setup>
 import { defineProps } from 'vue';
 
-defineProps({
+const props = defineProps({
     image_link: String,
     title: String,
+    id_manga: {
+        type: Number,
+        required: true
+    }
 });
 </script>
 
-
-<template>
-    <div class="card">
-      <img :src="image_link" alt="Manga Image" />
-      <div class="title">{{ title }}</div>
-    </div>
-  </template>
 <style scoped>
 .card {
     background-color: #49454F;
@@ -26,15 +30,14 @@ defineProps({
     align-items: center;
     justify-content: flex-start;
     overflow: hidden;
-    transition: transform 0.2s; 
+    transition: transform 0.2s;
 }
 
 .card:hover {
     transform: scale(1.05);
-    
 }
 
-.card:hover > .title{
+.card:hover > .title {
     opacity: 1;
     transition-duration: 0.5s;
 }
@@ -43,7 +46,7 @@ img {
     width: 100%;
     height: auto;
     border-radius: 4px 4px 0 0;
-} 
+}
 
 .title {
     color: #ffffff;
@@ -65,5 +68,4 @@ img {
         font-size: 0.8em;
     }
 }
-
 </style>

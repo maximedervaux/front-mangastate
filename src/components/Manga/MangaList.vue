@@ -35,11 +35,11 @@ onMounted(() => {
 <template>
     <H1>{{ title }}</H1>
     <div class="manga-list-container"> 
-      <MangaCard v-for="manga in mangas" :key="manga.id_manga" :title="manga.title_manga" :image_link="manga.cover_image_manga" />
+      <MangaCard v-for="manga in mangas" :key="manga.id_manga" :title="manga.title_manga" :image_link="manga.cover_image_manga" :id="manga.id_manga" />
       <div v-if="loading" class="loading">Loading...</div>
       <div v-if="error" class="error">{{ error }}</div>
     </div>
-  </template>
+</template>
   
 
   <style scoped>
