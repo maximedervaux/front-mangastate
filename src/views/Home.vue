@@ -1,5 +1,6 @@
 <script setup>
-    import MangaListHorizontal from '../components/Manga/MangaListHorizontal.vue';
+    import MangaList from '../components/Manga/MangaList.vue';
+import MangaListHorizontal from '../components/Manga/MangaListHorizontal.vue';
 </script>
 
 <template>
@@ -7,9 +8,11 @@
       <h3>Tu ne trouves pas ton manga ?</h3>
       <router-link to="/add" class="add-button">+ Ajoute le</router-link>
     </div>
+
+    <MangaList></MangaList>
     <!-- Affiche MangaListHorizontal par défaut -->
-    <MangaListHorizontal title="Dernières sorties 📅" ></MangaListHorizontal>
-    <MangaListHorizontal title="Populaire 📈" ></MangaListHorizontal>
+    <!-- <MangaListHorizontal title="Dernières sorties 📅" ></MangaListHorizontal>
+    <MangaListHorizontal title="Populaire 📈" ></MangaListHorizontal> -->
 
 </template>
 

@@ -60,7 +60,7 @@ const scrollLeft = () => {
     <div class="manga-list-container"> 
       <button @click="scrollLeft" class="scroll-button left">⬅️</button>
       <div class="manga-list">
-        <MangaCard v-for="manga in mangas" :key="manga.id_manga" :title="manga.title_manga" :image_link="manga.cover_image_manga" />
+        <MangaCard v-for="manga in mangas" :key="manga.id_manga" :title="manga.title_manga" :image_link="manga.cover_image_manga" :id_manga="manga.id_manga" />
       </div>
       <button @click="scrollRight" class="scroll-button right">➡️</button>
 

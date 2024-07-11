@@ -9,7 +9,7 @@ const ApiService = {
       console.log(response);
       return response.data;
     } catch (error) {
-      throw new Error(`API Error occurred: ${error.response.statusText}`);
+      throw new Error(`API Error occurred: ${error.response}`);
     }
   },
 
@@ -19,7 +19,7 @@ const ApiService = {
       const response = await axios.post(`${API_URL}/${resource}`, params);
       return response.data;
     } catch (error) {
-      throw new Error(`API Error occurred: ${error.response.statusText}`);
+      throw new Error(`API Error occurred: ${error.response}`);
     }
   },
 
@@ -29,7 +29,7 @@ const ApiService = {
       const response = await axios.put(`${API_URL}/${resource}/${slug}`, params);
       return response.data;
     } catch (error) {
-      throw new Error(`API Error occurred: ${error.response.statusText}`);
+      throw new Error(`API Error occurred: ${error.response}`);
     }
   },
 
@@ -39,7 +39,7 @@ const ApiService = {
       const response = await axios.delete(`${API_URL}/${resource}/${slug}`);
       return response.data;
     } catch (error) {
-      throw new Error(`API Error occurred: ${error.response.statusText}`);
+      throw new Error(`API Error occurred: ${error.response}`);
     }
   },
 
@@ -50,7 +50,7 @@ const ApiService = {
       console.log(response);
       return response.data;
     } catch (error) {
-      throw new Error(`API Error occurred: ${error.response.statusText}`);
+      throw new Error(`API Error occurred: ${error.response}`);
     }
   }
 };

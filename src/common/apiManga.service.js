@@ -10,6 +10,7 @@ const apiClient = axios.create({
 
 export default {
   getMangaById(id) {
+    console.log(id)
     return apiClient.get(`/manga/${id}`);
   }
 };

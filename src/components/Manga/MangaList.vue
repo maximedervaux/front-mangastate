@@ -15,7 +15,7 @@ const props = defineProps({
 
 const fetchMangas = async (page) => {
     try {
-        const response = await ApiService.query('manga', { page: page, limit: 10 });
+        const response = await ApiService.query('manga', { page: page, limit: 100 });
         console.log(response);
         mangas.value = response.items;
     } catch (err) {
@@ -35,7 +35,7 @@ onMounted(() => {
 <template>
     <H1>{{ title }}</H1>
     <div class="manga-list-container"> 
-      <MangaCard v-for="manga in mangas" :key="manga.id_manga" :title="manga.title_manga" :image_link="manga.cover_image_manga" :id="manga.id_manga" />
+      <MangaCard v-for="manga in mangas" :key="manga.id_manga" :title="manga.title_manga" :image_link="manga.cover_image_manga" :id_manga="manga.id_manga" />
       <div v-if="loading" class="loading">Loading...</div>
       <div v-if="error" class="error">{{ error }}</div>
     </div>
@@ -47,7 +47,8 @@ onMounted(() => {
       display: flex;
       align-items: center;
       position: relative;
-    
+      flex-wrap: wrap;
+      gap: 1rem;
   }
 
   .loading,
