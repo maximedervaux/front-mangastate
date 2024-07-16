@@ -1,3 +1,19 @@
+<template>
+  <h1>{{ title }}</h1>
+  <div class="manga-list-container">
+    <MangaCard
+      v-for="manga in mangas"
+      :key="manga.id_manga"
+      :title="manga.title_manga"
+      :image_link="manga.cover_image_manga"
+      :id_manga="manga.id_manga"
+      :hentai="manga.hentai"
+    />
+    <div v-if="loading" class="loading">Loading...</div>
+    <div v-if="error" class="error">{{ error }}</div>
+  </div>
+</template>
+
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import MangaCard from './MangaCard.vue';
@@ -14,13 +30,19 @@ const props = defineProps({
   searchQuery: String
 });
 
+const initializeHentaiFlag = (manga) => {
+  return {
+    ...manga,
+    hentai: manga.genres.some(genre => genre.name_genre === 'Hentai')
+  };
+};
+
 const fetchMangas = async (page) => {
   loading.value = true;
   error.value = null;
   try {
     const response = await ApiService.query('manga', { page: page, limit: 100 });
-    console.log(response);
-    mangas.value = response.items;
+    mangas.value = response.items.map(initializeHentaiFlag);
   } catch (err) {
     error.value = err.message;
   } finally {
@@ -33,8 +55,7 @@ const fetchMangaQuery = async (query) => {
   error.value = null;
   try {
     const response = await apiMangaService.getMangaByTitle(query);
-    console.log('Recherche par titre :', response);
-    mangas.value = response.data;
+    mangas.value = response.data.map(initializeHentaiFlag);
   } catch (err) {
     error.value = err.message;
   } finally {
@@ -58,21 +79,6 @@ onMounted(() => {
   }
 });
 </script>
-
-<template>
-  <H1>{{ title }}</H1>
-  <div class="manga-list-container">
-    <MangaCard
-      v-for="manga in mangas"
-      :key="manga.id_manga"
-      :title="manga.title_manga"
-      :image_link="manga.cover_image_manga"
-      :id_manga="manga.id_manga"
-    />
-    <div v-if="loading" class="loading">Loading...</div>
-    <div v-if="error" class="error">{{ error }}</div>
-  </div>
-</template>
 
 <style scoped>
 .manga-list-container {
