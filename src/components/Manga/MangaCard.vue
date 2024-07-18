@@ -20,8 +20,8 @@
   <style scoped>
   .card {
     background-color: #49454F;
-    min-width: 150px;
-    max-width: 150px;
+    min-width: 133px;
+    max-width: 133px;
     height: 200px;
     border-radius: 4px;
     display: flex;
@@ -44,8 +44,7 @@
   
   img {
     height: 100%;
-    width: auto;
-    min-width: 200px;
+    width: 100%;
     border-radius: 4px 4px 0 0;
   }
   .title {

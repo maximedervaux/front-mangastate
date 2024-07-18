@@ -84,7 +84,7 @@ onMounted(() => {
 .manga-list-container {
   display: flex;
   align-items: center;
-  position: relative;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
 }

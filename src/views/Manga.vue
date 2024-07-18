@@ -1,21 +1,42 @@
 <template>
-  <div class="content" v-if="manga">
+  <div class="container" v-if="manga">
     <img :src="manga.cover_image_manga" alt="Manga Cover">
     <div class="infos">
       <h1>{{ manga.title_manga }}</h1>
       <p v-if="manga.date_deb">Date parution : {{ formatDate(manga.date_deb) }}</p>
-      <p v-if="manga.themes.length">Thèmes : {{ manga.themes.map(theme => theme.name_genre).join(', ') }}</p>
-      <p v-if="manga.genres.length">Genres : {{ manga.genres.map(genre => genre.name_genre).join(', ') }}</p>
-      <p v-if="manga.auteurs.length">Auteurs : {{ manga.auteurs.map(auteur => auteur.name).join(', ') }}</p>
-      <p v-if="manga.description_manga">Description: {{ manga.description_manga }}</p>
+     
+      <p v-if="manga.themes.length">
+        <strong>Thèmes :</strong>
+        <template v-for="theme in manga.themes">
+          <Chip :label="theme.name" class="chip"/>
+        </template> 
+      </p>
+
+      <p v-if="manga.genres.length">
+        <strong>Genres :</strong> 
+        <template v-for="genre in manga.genres">
+          <Chip :label="genre.name_genre" class="chip"/>
+        </template>
+      </p>
+      <p v-if="manga.auteurs.length">
+        <strong>Auteurs : </strong>
+        <template v-for="auteur in manga.auteurs">
+          <Chip :label="auteur.name" class="chip"/>
+        </template>
+      </p>
+      <div v-if="manga.description_manga">
+        <strong> Description:</strong>
+        <ScrollPanel style="width: 100%; height: 250px">
+          {{ manga.description_manga }}
+        </ScrollPanel>
+      </div>
       <p v-else>Description: Information indisponible</p>
     </div>
   </div>
 </template>
 
-
 <script>
-import api from '../../common/apiManga.service';
+import api from '../common/apiManga.service';
 import { onMounted, ref } from 'vue'; 
 import { useRoute } from 'vue-router';
 
@@ -52,7 +73,7 @@ export default {
 </script>
 
 <style scoped>
-.content {
+.container {
   display: flex;
   padding: 2%;
   flex-wrap: wrap; /* Allow content to wrap on smaller screens */
@@ -67,8 +88,9 @@ img {
 }
 
 .infos {
-  flex: 1; 
+  flex: 1;
   margin-top: 1rem;
+  max-height: 500px; /* Match the image height */
 }
 
 .infos h1 {
@@ -79,9 +101,14 @@ img {
   margin: 0.5rem 0;
 }
 
+.chip {
+  padding: 5px 10px;
+  margin: 0px 2px;
+}
+
 /* Mobile Styles */
 @media (max-width: 768px) {
-  .content {
+  .container {
     flex-direction: column; 
     align-items: center; 
   }
@@ -96,6 +123,7 @@ img {
   .infos {
     width: 100%; 
     margin: 0; 
+    max-height: none; /* Remove max-height for mobile view */
   }
 
   .infos p {

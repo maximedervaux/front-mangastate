@@ -15,7 +15,7 @@ const props = defineProps({
 const fetchMangas = async (page) => {
     try {
         const response = await ApiService.query('manga', { page: page, limit: 10 });
-        console.log(response);
+        // console.log(response);
         mangas.value = response.items;
     } catch (err) {
         error.value = err.message;

@@ -5,8 +5,9 @@ const ApiService = {
   // Méthode générique pour les requêtes GET
   async get(resource, slug = '') {
     try {
+      
       const response = await axios.get(`${API_URL}/${resource}/${slug}`);
-      console.log(response);
+      // console.log(response);
       return response.data;
     } catch (error) {
       throw new Error(`API Error occurred: ${error.response}`);
@@ -47,7 +48,7 @@ const ApiService = {
   async query(resource, params) {
     try {
       const response = await axios.get(`${API_URL}/${resource}`, { params: params });
-      console.log(response);
+      // console.log(response);
       return response.data;
     } catch (error) {
       throw new Error(`API Error occurred: ${error.response}`);

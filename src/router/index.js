@@ -2,7 +2,7 @@ import { createMemoryHistory, createRouter } from 'vue-router'
 
 import Home from '../views/Home.vue'
 import AjouteManga from '../views/AjouteManga.vue'
-import Manga from '../components/Manga/Manga.vue'
+import Manga from '../views/Manga.vue'
 const routes = [
   { path: '/', component: Home },
   { path: '/add', component: AjouteManga },
