@@ -1,7 +1,7 @@
 <!-- MangaCard.vue -->
 <template>
     <router-link class="card" :to="{ name: 'Manga', params: { id_manga: id_manga } }">
-      <img :src="image_link" alt="Manga Image" :class="{hentai:hentai}" />
+      <img :src="image_link" alt="Manga Image" />
       <div class="title">{{ title }}</div>
     </router-link>
   </template>
@@ -13,7 +13,6 @@
     image_link: String,
     title: String,
     id_manga: Number,
-    hentai: Boolean
   });
   </script>
   
@@ -37,9 +36,6 @@
   .card:hover > .title {
     opacity: 1;
     transition-duration: 0.5s;
-  }
-  .hentai{
-  filter: blur(5px);
   }
   
   img {

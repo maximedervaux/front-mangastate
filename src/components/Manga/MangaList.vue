@@ -1,5 +1,4 @@
 <template>
-  <h1>{{ title }}</h1>
   <div class="manga-list-container">
     <MangaCard
       v-for="manga in mangas"
@@ -7,7 +6,6 @@
       :title="manga.title_manga"
       :image_link="manga.cover_image_manga"
       :id_manga="manga.id_manga"
-      :hentai="manga.hentai"
     />
     <div v-if="loading" class="loading">Loading...</div>
     <div v-if="error" class="error">{{ error }}</div>
@@ -27,22 +25,21 @@ let page = 1;
 
 const props = defineProps({
   title: String,
-  searchQuery: String
+  searchQuery: String,
+  limit: {
+    type: Number,
+    default: 100
+  },
+
 });
 
-const initializeHentaiFlag = (manga) => {
-  return {
-    ...manga,
-    hentai: manga.genres.some(genre => genre.name_genre === 'Hentai')
-  };
-};
 
 const fetchMangas = async (page) => {
   loading.value = true;
   error.value = null;
   try {
-    const response = await ApiService.query('manga', { page: page, limit: 100 });
-    mangas.value = response.items.map(initializeHentaiFlag);
+    const response = await ApiService.query('manga', { page: page, limit: props.limit });
+    mangas.value = response.items;
   } catch (err) {
     error.value = err.message;
   } finally {
@@ -54,8 +51,9 @@ const fetchMangaQuery = async (query) => {
   loading.value = true;
   error.value = null;
   try {
-    const response = await apiMangaService.getMangaByTitle(query);
-    mangas.value = response.data.map(initializeHentaiFlag);
+    const response = await apiMangaService.getMangaByTitle(query, { page: page, limit: props.limit });
+    console.log(response.data.items)
+    mangas.value = response.data.items
   } catch (err) {
     error.value = err.message;
   } finally {
@@ -87,6 +85,7 @@ onMounted(() => {
   justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
+  padding: 16px;
 }
 
 .loading,

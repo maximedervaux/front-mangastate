@@ -3,7 +3,7 @@
     <img :src="manga.cover_image_manga" alt="Manga Cover">
     <div class="infos">
       <h1>{{ manga.title_manga }}</h1>
-      <p v-if="manga.date_deb">Date parution : {{ formatDate(manga.date_deb) }}</p>
+      <p v-if="manga.date_deb"> <strong>Date parution : </strong> {{ formatDate(manga.date_deb) }}</p>
      
       <p v-if="manga.themes.length">
         <strong>Thèmes :</strong>

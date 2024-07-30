@@ -13,8 +13,12 @@ export default {
     // console.log(id)
     return apiClient.get(`/manga/${id}`);
   },
-  getMangaByTitle(title){
+  getMangaByTitle(title, params){
     // console.log(title)
-    return apiClient.get(`/manga/title/${title}`)
+    return apiClient.get(`/manga/title/${title}`,{params: params })
+  },
+  getExtraManga(title,params){
+     // console.log(title)
+     return apiClient.get(`/manga/title/${title}?extra=true`,{params: params })
   }
 };
