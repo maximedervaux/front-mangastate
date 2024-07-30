@@ -1,26 +1,26 @@
 <template>
-  <div style="display: flex; height: 100vh;">
+  <div style="display: flex">
     <!-- Formulaire de recherche à gauche -->
     <form id="smartadd" @submit.prevent="search" class="search-form">
+      <h1>Ajout intelligent</h1>
       <FloatLabel>
         <InputText id="mangasearch" v-model="searchValue" />
         <label for="mangasearch">Rechercher manga</label>
       </FloatLabel>
       <div class="list">
         <SmartMangaList :search-query="searchQuery" @select-manga="selectManga" />
-        <div v-if="loading" class="loading">Loading...</div>
-        <div v-if="error" class="error">{{ error }}</div>
       </div>
     </form>
     <!-- Formulaire de détails du manga à droite -->
     <form id="manga-details-form" class="details-form">
+      <h1>Ajout manuel</h1>
       <FloatLabel>
         <InputText id="title" v-model="selectedManga.title_manga" />
         <label for="title">Titre</label>
       </FloatLabel>
       <FloatLabel>
-        <InputText id="description" v-model="selectedManga.description_manga" />
-        <label for="description">Description</label>
+          <Textarea v-model="value" rows="5" cols="30" />
+          <label>Description</label>
       </FloatLabel>
       <FloatLabel>
         <InputText id="cover_image" v-model="selectedManga.cover_image_manga" />
@@ -28,11 +28,7 @@
       </FloatLabel>
       <FloatLabel>
         <InputText id="chapter" v-model="selectedManga.chapter" type="number" />
-        <label for="chapter">Chapitre</label>
-      </FloatLabel>
-      <FloatLabel>
-        <InputText id="status" v-model="selectedManga.status" />
-        <label for="status">Statut</label>
+        <label for="chapter">Nombre de chapitre</label>
       </FloatLabel>
       <FloatLabel>
         <InputText id="date_deb" v-model="selectedManga.date_deb" type="date" />
@@ -46,7 +42,10 @@
         <InputText id="prix" v-model="selectedManga.prix" type="number" />
         <label for="prix">Prix</label>
       </FloatLabel>
-      <Button label="Submit" />
+
+
+      <ConfirmDialog id="confirm"></ConfirmDialog>
+      <Button @click="confirm1()" label="Submit" ></Button>
     </form>
   </div>
 </template>
@@ -54,7 +53,9 @@
 <script setup>
 import { ref, defineProps, watch } from 'vue';
 import SmartMangaList from '../components/Manga/SmartMangaList.vue';
+import { useConfirm } from "primevue/useconfirm";
 
+const confirm = useConfirm();
 const searchValue = ref('');
 const searchQuery = ref('');
 const selectedManga = ref({
@@ -67,24 +68,25 @@ const selectedManga = ref({
   date_fin: '',
   prix: ''
 });
-const loading = ref(false);
-const error = ref(null);
 
 const search = () => {
   searchQuery.value = searchValue.value;
 };
 
-const selectManga = (manga) => {
-  selectedManga.value = manga;
-};
 
-// Watch the selectedManga to log its value whenever it changes
-watch(selectedManga, (newManga) => {
-  console.log('Manga sélectionné:', newManga);
-});
 </script>
 
 <style scoped>
+#smartadd{
+  border-right: solid grey 1px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+#manga-details-form{
+  gap:1.3em
+}
 .container {
   display: flex;
   flex-direction: column;

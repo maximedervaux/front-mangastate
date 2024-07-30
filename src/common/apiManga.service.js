@@ -17,8 +17,8 @@ export default {
     // console.log(title)
     return apiClient.get(`/manga/title/${title}`,{params: params })
   },
-  getExtraManga(title,params){
+  getNewManga(title){
      // console.log(title)
-     return apiClient.get(`/manga/title/${title}?extra=true`,{params: params })
+     return apiClient.get(`/manga/jikan/${title}`)
   }
 };

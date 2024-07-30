@@ -1,4 +1,5 @@
 <template>
+  <div v-if="!loading&&!error">🚀 Ces mangas viennent d'etre ajoutés 😎</div>
   <div class="manga-list-container">
     <MangaCard
       v-for="manga in mangas"
@@ -24,15 +25,20 @@ const props = defineProps({
 });
 
 const mangas = ref([]);
-const loading = ref(true);
+const loading = ref(false);
 const error = ref(null);
 
 const fetchMangaQuery = async (query) => {
+  mangas.value= []
   loading.value = true;
   error.value = null;
-  try {
-    const response = await apiMangaService.getExtraManga(query, { page: 1, limit: 6 });
-    mangas.value = response.data.items;
+    try {
+      const response = await apiMangaService.getNewManga(query);
+      if (response.data.length> 0) {
+      mangas.value = response.data;
+    }else{
+      error.value="Nous avons déja ce manga ou nous le trouvons pas"
+    }
   } catch (err) {
     error.value = err.message;
   } finally {
@@ -40,9 +46,6 @@ const fetchMangaQuery = async (query) => {
   }
 };
 
-const selectManga = (manga) => {
-  emit('select-manga', manga);
-};
 
 watch(() => props.searchQuery, (newQuery) => {
   if (newQuery) {
@@ -50,8 +53,6 @@ watch(() => props.searchQuery, (newQuery) => {
   }
 });
 
-// Fetch initial data
-fetchMangaQuery(props.searchQuery);
 </script>
 
 <style scoped>
@@ -61,6 +62,8 @@ fetchMangaQuery(props.searchQuery);
   gap: 1rem;
   padding: 16px;
   justify-content: center;
+  max-height: 60vh ;
+  overflow-y:auto;
 }
 
 .loading,
