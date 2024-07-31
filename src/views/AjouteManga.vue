@@ -1,16 +1,7 @@
 <template>
   <div style="display: flex">
     <!-- Formulaire de recherche à gauche -->
-    <form id="smartadd" @submit.prevent="search" class="search-form">
-      <h1>Ajout intelligent</h1>
-      <FloatLabel>
-        <InputText id="mangasearch" v-model="searchValue" />
-        <label for="mangasearch">Rechercher manga</label>
-      </FloatLabel>
-      <div class="list">
-        <SmartMangaList :search-query="searchQuery" @select-manga="selectManga" />
-      </div>
-    </form>
+    <SmartAdd class="smartadd" />
     <!-- Formulaire de détails du manga à droite -->
     <form id="manga-details-form" class="details-form">
       <h1>Ajout manuel</h1>
@@ -52,12 +43,11 @@
 
 <script setup>
 import { ref, defineProps, watch } from 'vue';
-import SmartMangaList from '../components/Manga/SmartMangaList.vue';
 import { useConfirm } from "primevue/useconfirm";
+import SmartAdd from '../components/Manga/SmartAdd.vue';
 
 const confirm = useConfirm();
-const searchValue = ref('');
-const searchQuery = ref('');
+
 const selectedManga = ref({
   title_manga: '',
   description_manga: '',
@@ -69,20 +59,14 @@ const selectedManga = ref({
   prix: ''
 });
 
-const search = () => {
-  searchQuery.value = searchValue.value;
-};
 
 
 </script>
 
 <style scoped>
-#smartadd{
-  border-right: solid grey 1px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
+.smartadd{
+width: 35%;
+height: 90vh;
 }
 #manga-details-form{
   gap:1.3em

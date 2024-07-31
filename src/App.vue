@@ -11,6 +11,7 @@
 import { ref } from 'vue';
 import Header from './components/Header.vue';
 
+
 const searchQuery = ref('');
 
 const updateSearchQuery = (query) => {
