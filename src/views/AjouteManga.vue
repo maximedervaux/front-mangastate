@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex">
+  <div style="display: flex; max-height: 85vh;">
     <!-- Formulaire de recherche à gauche -->
     <SmartAdd class="smartadd" />
     <!-- Formulaire de détails du manga à droite -->
