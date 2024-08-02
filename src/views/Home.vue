@@ -1,13 +1,20 @@
 <template >
+  <div class='hero'>
+    <img src="../assets/icon-manga.webp" style="width: 20%;height: auto;">
+    <div style="display: flex;flex-direction: column;justify-content: center;">
+        <h1 style="font-size: 5em;margin: 0px">Mang<span style="color:#F8C301">Astate</span></h1>
+        <p style="margin: 0px">Votre bibliothèque de mangas réinventée : Simple, Intuitive, Puissante !</p>
+    </div>
+  </div>
     <div class="in-line">
       <h3>Tu ne trouves pas ton manga ?</h3>
       <Button as="router-link"  label="Ajoute le" to="/add" text  />
     </div>
 
-    <MangaList :search-query="searchQuery"></MangaList> 
+    <!-- <MangaList :search-query="searchQuery"></MangaList>  -->
     <!-- Affiche MangaListHorizontal par défaut -->
-    <!-- <MangaListHorizontal title="Dernières sorties 📅" ></MangaListHorizontal>
-    <MangaListHorizontal title="Populaire 📈" ></MangaListHorizontal> -->
+    <MangaListHorizontal title="Dernières sorties 📅" ></MangaListHorizontal>
+    <MangaListHorizontal title="Populaire 📈" ></MangaListHorizontal>
 
 </template>
 
@@ -32,6 +39,9 @@ const props = defineProps({
     flex-direction: row;
     align-content: center;
   }
-
+  .hero{
+    display: flex;
+    justify-content: center;
+  }
 
 </style>
