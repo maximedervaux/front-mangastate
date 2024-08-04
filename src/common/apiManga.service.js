@@ -17,8 +17,13 @@ export default {
     // console.log(title)
     return apiClient.get(`/manga/title/${title}`,{params: params })
   },
+  //Ajouter de nouveaux mangas
   getNewManga(title){
      // console.log(title)
      return apiClient.get(`/manga/jikan/${title}`)
-  }
+  },
+  //Recupere les 20 mangas recents
+  getNewestManga(){
+    return apiClient.get(`/manga/newest`)
+ }
 };

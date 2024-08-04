@@ -1,4 +1,7 @@
 <template >
+
+  <MangaList v-if="searchQuery" :search-query="searchQuery"></MangaList> 
+ <div v-else>
   <div class='hero'>
     <img src="../assets/icon-manga.webp" style="width: 20%;height: auto;">
     <div style="display: flex;flex-direction: column;justify-content: center;">
@@ -10,12 +13,11 @@
       <h3>Tu ne trouves pas ton manga ?</h3>
       <Button as="router-link"  label="Ajoute le" to="/add" text  />
     </div>
-
-    <!-- <MangaList :search-query="searchQuery"></MangaList>  -->
+   
     <!-- Affiche MangaListHorizontal par défaut -->
-    <MangaListHorizontal title="Dernières sorties 📅" ></MangaListHorizontal>
-    <MangaListHorizontal title="Populaire 📈" ></MangaListHorizontal>
-
+    <MangaListHorizontal  title="Dernières sorties 📅" fetch="newest" ></MangaListHorizontal>
+    <MangaListHorizontal  title="Populaire 📈" ></MangaListHorizontal>
+  </div>
 </template>
 
 <script setup>

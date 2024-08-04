@@ -21,13 +21,13 @@
 import { ref, onMounted } from 'vue';
 import MangaCard from './MangaCard.vue';
 import ApiService from '../../common/api.service';
+import ApiManga from '../../common/apiManga.service';
 import Carousel from 'primevue/carousel';
 
 const mangas = ref([]);
 const loading = ref(true);
 const error = ref(null);
 const numVisible = Math.round(screen.width/200);  
-console.log(numVisible)
 let page = 1;
 
 const responsiveOptions = [
@@ -69,13 +69,27 @@ const responsiveOptions = [
 ];
 
 const props = defineProps({
-    title: String
+    title: String,
+    fetch: String,
 });
 
-const fetchMangas = async (page) => {
-    try {
-        const response = await ApiService.query('manga', { page: page, limit: 20 });
-        mangas.value = response.items.filter(item => item && item.id_manga && item.title_manga && item.cover_image_manga);
+const fetchMangas = async (fetchParam) => {
+    const fetch = String(fetchParam); 
+    console.log("la chaine est :", fetch)
+    try { 
+        let result;
+        switch(fetch) {
+            case "newest":
+                console.log('Fetching newest mangas');
+                result = await ApiManga.getNewestManga();
+                mangas.value = result.data;
+                break;
+            default:
+                result = await ApiService.query('manga', { page: page, limit: 20 });
+                mangas.value = result.items.filter(item => item && item.id_manga && item.title_manga && item.cover_image_manga);
+                break;
+        }
+        
     } catch (err) {
         error.value = err.message;
     } finally {
@@ -83,8 +97,9 @@ const fetchMangas = async (page) => {
     }
 };
 
+
 onMounted(() => {
-    fetchMangas(page);
+    fetchMangas(props.fetch);
 });
 </script>
 
