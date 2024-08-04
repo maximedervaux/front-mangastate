@@ -1,7 +1,7 @@
 <template>
     <h1>{{ title }}</h1>
     <div class="card">
-        <Carousel :value="mangas" :numVisible="10" :numScroll="3">
+        <Carousel :value="mangas" :numVisible="numVisible" :numScroll="3" :responsiveOptions="responsiveOptions">
             <template #item="slotProps">
                 <MangaCard
                     v-if="slotProps.data && slotProps.data.id_manga && slotProps.data.title_manga && slotProps.data.cover_image_manga"
@@ -26,7 +26,47 @@ import Carousel from 'primevue/carousel';
 const mangas = ref([]);
 const loading = ref(true);
 const error = ref(null);
+const numVisible = Math.round(screen.width/200);  
+console.log(numVisible)
 let page = 1;
+
+const responsiveOptions = [
+    {
+        breakpoint: '1350px',
+        numVisible: 7,
+        numScroll: 5
+    },
+    {
+        breakpoint: '1250px',
+        numVisible: 6,
+        numScroll: 5
+    },
+    {
+        breakpoint: '1024px',
+        numVisible: 5,
+        numScroll: 5
+    },
+    {
+        breakpoint: '1024px',
+        numVisible: 5,
+        numScroll: 5
+    },
+    {
+        breakpoint: '768px',
+        numVisible: 4,
+        numScroll: 2
+    },
+    {
+        breakpoint: '650px',
+        numVisible: 3,
+        numScroll: 2
+    },
+    {
+        breakpoint: '500px',
+        numVisible: 2,
+        numScroll: 1
+    }
+];
 
 const props = defineProps({
     title: String
@@ -34,7 +74,7 @@ const props = defineProps({
 
 const fetchMangas = async (page) => {
     try {
-        const response = await ApiService.query('manga', { page: page, limit: 10 });
+        const response = await ApiService.query('manga', { page: page, limit: 20 });
         mangas.value = response.items.filter(item => item && item.id_manga && item.title_manga && item.cover_image_manga);
     } catch (err) {
         error.value = err.message;
