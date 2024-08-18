@@ -1,6 +1,6 @@
 <template>
     <div v-if="!connected">
-      <Button to="/signin" label="SignIn" icon="pi pi-user" as="router-link" />
+      <Button to="/signin" label="Connexion" icon="pi pi-user" as="router-link" class="SigninBtn" />
     </div>
     <div v-else>
       <Avatar @click="logout" image="https://i.redd.it/u595cks8nqhx.jpg" class="mr-2" size="xlarge" shape="circle" />
@@ -22,6 +22,6 @@
   </script>
   
   <style scoped>
- 
+  
   </style>
   

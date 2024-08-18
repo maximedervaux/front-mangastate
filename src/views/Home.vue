@@ -3,10 +3,10 @@
   <MangaList v-if="searchQuery" :search-query="searchQuery"></MangaList> 
  <div v-else>
   <div class='hero'>
-    <img src="../assets/icon-manga.webp" style="width: 20%;height: auto;">
+    <img src="../assets/robotRGB.png" style="width: 20%;height: auto;">
     <div style="display: flex;flex-direction: column;justify-content: center;">
-        <h1 style="font-size: 5em;margin: 0px">Mang<span style="color:#F8C301">Astate</span></h1>
-        <p style="margin: 0px">Votre bibliothèque de mangas réinventée : Simple, Intuitive, Puissante !</p>
+        <h1 style="font-size: 5em;margin: 0px; font-weight:800;">Mang<span style="color:#F8C301">Astate</span></h1>
+        <p style="margin: 0px;font-size: 1.5rem;font-weight:500;">Votre bibliothèque de mangas réinventée : Simple, Intuitive, Puissante !</p>
     </div>
   </div>
     <div class="in-line">
