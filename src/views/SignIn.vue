@@ -1,20 +1,23 @@
 <template>
-  <form class="form" @submit.prevent="login">
-    <div class="input">
-      <label for="username">Username</label>
-      <InputText id="username" v-model="username" />
-    </div>
+  <div class="container">
+    <form class="form" @submit.prevent="login">
+      <img class="logoAstate" src='../assets/icon-manga.webp'>
+      <div class="input">
+        <label for="username">Username</label>
+        <InputText id="username" v-model="username" />
+      </div>
 
-    <div class="input">
-      <label for="password">Password</label>
-      <InputText id="password" v-model="password" type="password" />
-    </div>
+      <div class="input">
+        <label for="password">Password</label>
+        <InputText id="password" v-model="password" type="password" />
+      </div>
 
-    <Button type="submit" label="Submit" class="mt-2" />
-    
-    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-    <p v-if="token" class="token">Token: {{ token }}</p>
-  </form>
+      <Button type="submit" label="Submit" class="mt-2" />
+      
+      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+      <p v-if="token" class="token">Token: {{ token }}</p>
+    </form>
+  </div>
 </template>
 
 <script setup>
@@ -43,9 +46,18 @@ const login = async () => {
 </script>
 
 <style scoped>
+.logoAstate{
+  max-width: 126px;
+}
+.container{
+ display: flex;
+ align-items: center;
+ justify-content:center ;
+}
 .form {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 30%;
 }
 .input {

@@ -5,26 +5,28 @@
       <h1>{{ manga.title_manga }}</h1>
       <p v-if="manga.date_deb"> <strong>Date parution : </strong> {{ formatDate(manga.date_deb) }}</p>
      
-      <p v-if="manga.themes.length">
+      <div v-if="manga.themes.length" class="chiplist" >
         <strong>Thèmes :</strong>
-        <template v-for="theme in manga.themes">
-          <Chip :label="theme.name" class="chip"/>
-        </template> 
-      </p>
+          <template v-for="theme in manga.themes" >
+            <Chip :label="theme.name" class="chip"/>
+          </template> 
+      </div>
 
-      <p v-if="manga.genres.length">
+      <div v-if="manga.genres.length" class="chiplist">
         <strong>Genres :</strong> 
         <template v-for="genre in manga.genres">
           <Chip :label="genre.name_genre" class="chip"/>
         </template>
-      </p>
-      <p v-if="manga.auteurs.length">
+      </div>
+
+      <div v-if="manga.auteurs.length" class="chiplist">
         <strong>Auteurs : </strong>
         <template v-for="auteur in manga.auteurs">
           <Chip :label="auteur.name" class="chip"/>
         </template>
-      </p>
-      <div v-if="manga.description_manga">
+      </div>
+
+      <div v-if="manga.description_manga" class="chiplist">
         <strong> Description:</strong>
         <ScrollPanel style="width: 100%; height: 250px">
           {{ manga.description_manga }}
@@ -103,9 +105,15 @@ img {
 
 .chip {
   padding: 5px 10px;
-  margin: 0px 2px;
 }
 
+.chiplist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px; 
+  align-items: center;
+  margin:8px 0px ;
+}
 /* Mobile Styles */
 @media (max-width: 768px) {
   .container {
