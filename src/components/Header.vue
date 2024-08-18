@@ -5,21 +5,31 @@
       <router-link to="/">Home</router-link>
       <router-link to="/add">Add</router-link>
     </nav>
-    <input type="text" @input="handleSearch" placeholder="Rechercher un manga" v-model="searchQuery" />
+    <input
+      type="text"
+      @keyup.enter="handleSearch"
+      placeholder="Rechercher un manga"
+      v-model="searchQuery"
+    />
     <Signin></Signin>
   </div>
 </template>
 
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import Signin from './Button/SignInButton.vue';
 
-// Déclarez emit en utilisant defineEmits
-const emit = defineEmits(['search']);
 const searchQuery = ref('');
+const router = useRouter();
 
 const handleSearch = () => {
-  emit('search', searchQuery.value);
+  if (searchQuery.value.trim()) {
+    router.push({ 
+      path: '/search', 
+      query: { q: searchQuery.value } 
+    });
+  }
 };
 </script>
 

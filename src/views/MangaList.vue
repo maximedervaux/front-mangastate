@@ -14,46 +14,22 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';
-import MangaCard from './MangaCard.vue';
-import ApiService from '../../common/api.service';
-import apiMangaService from '../../common/apiManga.service';
+import { useRoute } from 'vue-router';
+import MangaCard from '../components/Manga/MangaCard.vue';
+import apiMangaService from '../common/apiManga.service';
 
 const mangas = ref([]);
 const loading = ref(true);
 const error = ref(null);
+const route = useRoute();
 let page = 1;
-
-const props = defineProps({
-  title: String,
-  searchQuery: String,
-  limit: {
-    type: Number,
-    default: 100
-  },
-
-});
-
-
-const fetchMangas = async (page) => {
-  loading.value = true;
-  error.value = null;
-  try {
-    const response = await ApiService.query('manga', { page: page, limit: props.limit });
-    mangas.value = response.items;
-  } catch (err) {
-    error.value = err.message;
-  } finally {
-    loading.value = false;
-  }
-};
 
 const fetchMangaQuery = async (query) => {
   loading.value = true;
   error.value = null;
   try {
-    const response = await apiMangaService.getMangaByTitle(query, { page: page, limit: props.limit });
-    console.log(response.data.items)
-    mangas.value = response.data.items
+    const response = await apiMangaService.getMangaByTitle(query, { page: page, limit: 100 });
+    mangas.value = response.data.items;
   } catch (err) {
     error.value = err.message;
   } finally {
@@ -61,19 +37,15 @@ const fetchMangaQuery = async (query) => {
   }
 };
 
-watch(() => props.searchQuery, (newQuery) => {
+watch(() => route.query.q, (newQuery) => {
   if (newQuery) {
     fetchMangaQuery(newQuery);
-  } else {
-    fetchMangas(page);
   }
 });
 
 onMounted(() => {
-  if (props.searchQuery) {
-    fetchMangaQuery(props.searchQuery);
-  } else {
-    fetchMangas(page);
+  if (route.query.q) {
+    fetchMangaQuery(route.query.q);
   }
 });
 </script>

@@ -13,7 +13,7 @@
             </template>
         </Carousel>
     </div>
-    <div v-if="loading" class="loading">Loading...</div>
+    <div v-if="loading" class="loading">Loading Hor...</div>
     <div v-if="error" class="error">{{ error }}</div>
 </template>
 
