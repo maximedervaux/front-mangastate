@@ -10,6 +10,10 @@
 <script setup>
 import { ref } from 'vue';
 import Header from './components/Header.vue';
+import { useAuthStore } from './stores/authStore';
+
+const authStore = useAuthStore();
+authStore.loadToken();
 
 
 const searchQuery = ref('');

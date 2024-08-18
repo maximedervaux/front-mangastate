@@ -1,5 +1,5 @@
 <template >
-
+  <ScrollTop />
   <MangaList v-if="searchQuery" :search-query="searchQuery"></MangaList> 
  <div v-else>
   <div class='hero'>

@@ -3,14 +3,16 @@
     <img src="../assets/logo.png" class="logo">
     <nav class="navbar">
       <router-link to="/">Home</router-link>
-      <router-link to="/ADD">Add</router-link>
+      <router-link to="/add">Add</router-link>
     </nav>
     <input type="text" @input="handleSearch" placeholder="Rechercher un manga" v-model="searchQuery" />
+    <Signin></Signin>
   </div>
 </template>
 
 <script setup>
 import { ref, defineEmits } from 'vue';
+import Signin from './Button/SignInButton.vue';
 
 // Déclarez emit en utilisant defineEmits
 const emit = defineEmits(['search']);
@@ -44,6 +46,7 @@ nav a.router-link-active {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
