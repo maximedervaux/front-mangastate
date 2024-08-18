@@ -5,12 +5,15 @@
       <router-link to="/">Home</router-link>
       <router-link to="/add">Add</router-link>
     </nav>
-    <input
-      type="text"
-      @keyup.enter="handleSearch"
-      placeholder="Rechercher un manga"
-      v-model="searchQuery"
-    />
+    <div class="search-container">
+      <input
+        type="text"
+        @keyup.enter="handleSearch"
+        placeholder="Rechercher un manga"
+        v-model="searchQuery"
+      />
+      <button v-if="searchQuery" @click="clearSearch" class="clear-btn">✕</button>
+    </div>
     <Signin></Signin>
   </div>
 </template>
@@ -29,7 +32,12 @@ const handleSearch = () => {
       path: '/search', 
       query: { q: searchQuery.value } 
     });
+    searchQuery.value = ''; // Efface le texte après la recherche
   }
+};
+
+const clearSearch = () => {
+  searchQuery.value = ''; // Efface le texte lorsque la croix est cliquée
 };
 </script>
 
@@ -64,9 +72,14 @@ nav a.router-link-active {
   height: auto;
 }
 
-input {
+.search-container {
+  position: relative;
   width: 350px;
   margin: 20px auto;
+}
+
+input {
+  width: 100%;
   padding: 10px 45px;
   background: white url("../assets/search-icon.png") no-repeat 15px center;
   background-size: 15px 15px;
@@ -74,5 +87,21 @@ input {
   border: none;
   border-radius: 20px;
   color: black;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #999;
+}
+
+.clear-btn:hover {
+  color: #333;
 }
 </style>

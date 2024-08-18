@@ -1,14 +1,17 @@
 <template>
-  <div class="manga-list-container">
-    <MangaCard
-      v-for="manga in mangas"
-      :key="manga.id_manga"
-      :title="manga.title_manga"
-      :image_link="manga.cover_image_manga"
-      :id_manga="manga.id_manga"
-    />
-    <div v-if="loading" class="loading">Loading...</div>
-    <div v-if="error" class="error">{{ error }}</div>
+  <div class='container'>
+    <h1>🔎 Vous recherchez : <span style="color:#FFCF00; font-weight: 500;font-style: italic;">"{{ route.query.q }}"</span></h1>
+    <div class="manga-list-container">
+      <MangaCard
+        v-for="manga in mangas"
+        :key="manga.id_manga"
+        :title="manga.title_manga"
+        :image_link="manga.cover_image_manga"
+        :id_manga="manga.id_manga"
+      />
+      <div v-if="loading" class="loading">Loading...</div>
+      <div v-if="error" class="error">{{ error }}</div>
+    </div>
   </div>
 </template>
 
@@ -60,6 +63,9 @@ onMounted(() => {
   padding: 16px;
 }
 
+.container{
+  margin: 0px 5px;
+}
 .loading,
 .error {
   position: absolute;
