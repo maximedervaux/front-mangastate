@@ -5,6 +5,24 @@
       </div>
     
       <Drawer v-model:visible="visibleRight" header="MangAstate" position="right">
+
+        <div class="flex justify-center" style="width: 100%">
+          <Menu :model="items" style="border: none;width: 100%;">
+              <template #item="{ item, props }">
+                  <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+                      <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+                          <span :class="item.icon" />
+                          <span class="ml-2">{{ item.label }}</span>
+                      </a>
+                  </router-link>
+                  <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
+                      <span :class="item.icon" />
+                      <span class="ml-2">{{ item.label }}</span>
+                  </a>
+              </template>
+          </Menu>
+        </div>
+
         <template #footer>
             <div style="display: flex;justify-content: center;"  v-if="!connected">
               <Button to="/connexion" label="Connexion" icon="pi pi-user" as="router-link" class="SigninBtn" @click="visibleRight=false"/>
@@ -28,7 +46,6 @@ import { ref } from "vue";
 import { computed } from 'vue';
 import { useAuthStore } from '../../stores/authStore';
 
-
 const visibleRight = ref(false);
 const authStore = useAuthStore();
 const connected = computed(() => authStore.isTokenValid());
@@ -43,6 +60,29 @@ const user = computed(() => {
 const logout = () => {
   authStore.logout();
 };
+
+const items = ref([
+    {
+        label: 'Dashboard',
+        icon: 'pi pi-home',
+        route: '/'
+    },
+    {
+        label: 'Mangathèque',
+        icon: 'pi pi-bookmark',
+        route:'/'
+    },
+    {
+        label: 'Calendrier',
+        icon: 'pi pi-calendar',
+        route:'/'
+    },
+    {
+        label: 'Settings',
+        icon: 'pi pi-cog',
+        route:'/'
+    }
+]);
 
 </script>
 
@@ -66,6 +106,10 @@ const logout = () => {
   display: flex;
   flex-direction: row;
   gap: 8px
+}
+
+.content{
+  overflow-y: auto;
 }
 
 </style>
