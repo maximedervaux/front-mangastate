@@ -13,7 +13,6 @@
       </div>
 
       <Button type="submit" label="Connexion" class="btnSignIn" icon="pi pi-user"/>
-      
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
       <p v-if="token" class="token">Token: {{ token }}</p>
     </form>
@@ -23,6 +22,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useAuthStore } from '../stores/authStore';
+
 
 const username = ref('');
 const password = ref('');
@@ -64,7 +64,7 @@ const login = async () => {
   align-items: center;
   width: 30%;
   border-radius: 2%;
-  background-color: #1E2023;
+  background-color: #18181b;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
 }
 .input {

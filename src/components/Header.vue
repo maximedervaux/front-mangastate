@@ -14,14 +14,14 @@
       />
       <button v-if="searchQuery" @click="clearSearch" class="clear-btn">✕</button>
     </div>
-    <Signin></Signin>
+    <Burger></Burger>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import Signin from './Button/SignInButton.vue';
+import Burger from './Drawer/Burger.vue';
 
 const searchQuery = ref('');
 const router = useRouter();
