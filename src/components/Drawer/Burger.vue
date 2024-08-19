@@ -7,7 +7,7 @@
       <Drawer v-model:visible="visibleRight" header="MangAstate" position="right">
         <template #footer>
             <div style="display: flex;justify-content: center;"  v-if="!connected">
-              <Button to="/connexion" label="Connexion" icon="pi pi-user" as="router-link" class="SigninBtn" />
+              <Button to="/connexion" label="Connexion" icon="pi pi-user" as="router-link" class="SigninBtn" @click="visibleRight=false"/>
             </div>
             <div class="footer" v-else>
               <div class="userPersonalInfo">
