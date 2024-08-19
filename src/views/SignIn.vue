@@ -34,7 +34,6 @@ const authStore = useAuthStore();
 const login = async () => {
   try {
     const authToken = await authStore.login(username.value, password.value);
-    console.log(authToken)
     token.value = authToken;
     errorMessage.value = '';
     // Rediriger l'utilisateur après une connexion réussie, par exemple :

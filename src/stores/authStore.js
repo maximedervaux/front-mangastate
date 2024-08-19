@@ -8,17 +8,16 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: localStorage.getItem('authToken') || '',
     expirationTime: localStorage.getItem('expirationTime') || null,
+    user: localStorage.getItem('user') || null,
   }),
   actions: {
     async login(username, password) {
       try {
-        console.log(username,password)
         const response = await axios.post(`${API_URL}/auth/login`, {
           username: username,
           password: password
         });
         
-       
         if (response.status === 200) {
           this.token = response.data.access_token;
 
@@ -32,6 +31,11 @@ export const useAuthStore = defineStore('auth', {
 
           // Configurer le header Authorization pour axios
           axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
+
+          // Récupérer les informations de l'utilisateur et les sauvegarder
+          this.user = (await axios.get(`${API_URL}/auth/profile`)).data;
+          localStorage.setItem('user', JSON.stringify(this.user));
+
           return this.token;
         } else {
           throw new Error('Login failed');
@@ -44,8 +48,10 @@ export const useAuthStore = defineStore('auth', {
     logout() {
       this.token = '';
       this.expirationTime = null;
+      this.user = null;
       localStorage.removeItem('authToken');
       localStorage.removeItem('expirationTime');
+      localStorage.removeItem('user'); 
       delete axios.defaults.headers.common['Authorization'];
     },
     isTokenValid() {
