@@ -4,7 +4,7 @@
       <div style="text-align: center;">
         <img class="logoAstate" src='../assets/icon-manga.webp'>
         <h2>Welcome Back</h2>
-        <p>Vous n'avez pas encore de compte ? <router-link to="/signup">Créez le maintenant!</router-link></p>
+        <p>Vous n'avez pas encore de compte ? <router-link to="/inscription">Créez le maintenant!</router-link></p>
       </div>
       <div class="input">
         <label for="username">Username</label>
@@ -22,7 +22,6 @@
 
       <Button type="submit" label="Connexion" class="btnSignIn" icon="pi pi-user"/>
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-      <p v-if="token" class="token">Token: {{ token }}</p>
     </form>
   </div>
 </template>
@@ -36,14 +35,13 @@ import { useAuthStore } from '../stores/authStore';
 const username = ref('');
 const password = ref('');
 const errorMessage = ref('');
-const token = ref('');
+
 
 const authStore = useAuthStore();
 
 const login = async () => {
   try {
-    const authToken = await authStore.login(username.value, password.value);
-    token.value = authToken;
+    await authStore.login(username.value, password.value);
     errorMessage.value = '';
     // Rediriger l'utilisateur après une connexion réussie, par exemple :
     // this.$router.push('/dashboard');
