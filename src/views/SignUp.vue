@@ -1,3 +1,4 @@
+
 <template>
   <div class="container">
     <form class="form" @submit.prevent="login">
@@ -12,9 +13,13 @@
         <InputText id="password" v-model="password" type="password" />
       </div>
 
-      <Button type="submit" label="Connexion" class="btnSignIn" icon="pi pi-sign-in"/>
+      <div class="input">
+            <label for="buttondisplay" class="font-bold block mb-2"> Date d'anniversaire </label>
+            <DatePicker v-model="date" showIcon fluid :showOnFocus="false" inputId="date" />
+      </div>
+
+      <Button type="submit" label="Inscirption" class="btnSignIn" icon="pi pi-user-plus"/>
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-      <p v-if="token" class="token">Token: {{ token }}</p>
     </form>
   </div>
 </template>
@@ -26,6 +31,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter();
 
+const date = ref(null);
 const username = ref('');
 const password = ref('');
 const errorMessage = ref('');
@@ -35,10 +41,9 @@ const authStore = useAuthStore();
 
 const login = async () => {
   try {
-    const authToken = await authStore.login(username.value, password.value);
+    const authToken = await authStore.register(username.value, password.value, date.value);
     token.value = authToken;
     errorMessage.value = '';
-
     router.push('/dashboard');
   } catch (error) {
     errorMessage.value = 'Invalid username or password';

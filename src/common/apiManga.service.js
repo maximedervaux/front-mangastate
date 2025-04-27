@@ -22,8 +22,31 @@ export default {
      // console.log(title)
      return apiClient.get(`/manga/jikan/${title}`)
   },
-  //Recupere les 20 mangas recents
   getNewestManga(){
     return apiClient.get(`/manga/newest`)
- }
+ },
+  addToWishlist(mangaId) {
+    let token = localStorage.getItem('authToken');
+    console.log('test',token)
+    if (!token) {
+      throw new Error('User not authenticated');
+    }
+    apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    try  {
+      apiClient.post(`/users/addMangaToUser/${mangaId}`)
+    }
+    catch (error) {
+      console.error('Error adding manga to wishlist', error);
+      throw error;
+    }
+
+  },
+  getUserMangas(id_user)  {
+    let token = localStorage.getItem('authToken');
+    if (!token) {
+      throw new Error('User not authenticated');
+    }
+    apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    return apiClient.get(`/users/getMangasByUserId/${id_user}`)
+  }
 };

@@ -24,8 +24,9 @@
         </div>
 
         <template #footer>
-            <div style="display: flex;justify-content: center;"  v-if="!connected">
-              <Button to="/connexion" label="Connexion" icon="pi pi-user" as="router-link" class="SigninBtn" @click="visibleRight=false"/>
+            <div style="display: flex;justify-content: center; gap: 4px"  v-if="!connected">
+              <Button to="/connexion" label="Connexion" icon="pi pi-sign-in" as="router-link" class="SigninBtn" @click="visibleRight=false"/>
+              <Button to="/inscription" label="Inscription" icon="pi pi-user-plus" as="router-link" class="SigninBtn" @click="visibleRight=false"/>
             </div>
             <div class="footer" v-else>
               <div class="userPersonalInfo">
@@ -65,7 +66,7 @@ const items = ref([
     {
         label: 'Dashboard',
         icon: 'pi pi-home',
-        route: '/'
+        route: '/dashboard'
     },
     {
         label: 'Mangathèque',

@@ -32,12 +32,12 @@ const handleSearch = () => {
       path: '/search', 
       query: { q: searchQuery.value } 
     });
-    searchQuery.value = ''; // Efface le texte après la recherche
+    searchQuery.value = ''; 
   }
 };
 
 const clearSearch = () => {
-  searchQuery.value = ''; // Efface le texte lorsque la croix est cliquée
+  searchQuery.value = ''; 
 };
 </script>
 
