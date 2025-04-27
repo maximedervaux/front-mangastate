@@ -1,8 +1,9 @@
 // src/stores/authStore.js
-import { defineStore } from 'pinia';
-import axios from 'axios';
-import { API_URL } from '../common/config';
-import {jwtDecode} from 'jwt-decode';
+import { defineStore } from "pinia";
+import axios from "axios";
+import { API_URL } from "../common/config";
+import { jwtDecode } from "jwt-decode";
+import { reactive } from "vue";
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -15,9 +16,9 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response = await axios.post(`${API_URL}/auth/login`, {
           username: username,
-          password: password
+          password: password,
         });
-        
+        console.log(response);
         if (response.status === 200) {
           this.token = response.data.access_token;
 
@@ -26,33 +27,35 @@ export const useAuthStore = defineStore('auth', {
           this.expirationTime = decodedToken.exp * 1000; // Convertir en millisecondes
 
           // Stocker le token et son expiration
-          localStorage.setItem('authToken', this.token);
-          localStorage.setItem('expirationTime', this.expirationTime);
+          localStorage.setItem("authToken", this.token);
+          localStorage.setItem("expirationTime", this.expirationTime);
 
           // Configurer le header Authorization pour axios
-          axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`;
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${this.token}`;
 
           // Récupérer les informations de l'utilisateur et les sauvegarder
           this.user = (await axios.get(`${API_URL}/auth/profile`)).data;
-          localStorage.setItem('user', JSON.stringify(this.user));
+          localStorage.setItem("user", JSON.stringify(this.user));
 
           return this.token;
         } else {
-          throw new Error('Login failed');
+          throw new Error("Login failed");
         }
       } catch (error) {
-        console.error('Error logging in', error);
+        console.error("Error logging in", error);
         throw error;
       }
     },
     logout() {
-      this.token = '';
+      this.token = "";
       this.expirationTime = null;
       this.user = null;
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('expirationTime');
-      localStorage.removeItem('user'); 
-      delete axios.defaults.headers.common['Authorization'];
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("expirationTime");
+      localStorage.removeItem("user");
+      delete axios.defaults.headers.common["Authorization"];
     },
     isTokenValid() {
       if (!this.token || !this.expirationTime) {

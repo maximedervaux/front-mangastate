@@ -1,27 +1,26 @@
 <template>
   <div class="card">
-      <div class="flex gap-2 justify-center">
-          <Button icon="pi pi-bars" @click="visibleRight = true" />
-      </div>
-    
-      <Drawer v-model:visible="visibleRight" header="MangAstate" position="right">
+    <div class="flex gap-2 justify-center">
+      <Button icon="pi pi-bars" @click="visibleRight = true" />
+    </div>
 
-        <div class="flex justify-center" style="width: 100%">
-          <Menu :model="items" style="border: none;width: 100%;">
-              <template #item="{ item, props }">
-                  <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
-                      <a v-ripple :href="href" v-bind="props.action" @click="navigate">
-                          <span :class="item.icon" />
-                          <span class="ml-2">{{ item.label }}</span>
-                      </a>
-                  </router-link>
-                  <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
-                      <span :class="item.icon" />
-                      <span class="ml-2">{{ item.label }}</span>
-                  </a>
-              </template>
-          </Menu>
-        </div>
+    <Drawer v-model:visible="visibleRight" header="MangAstate" position="right">
+      <div class="flex justify-center" style="width: 100%">
+        <Menu :model="items" style="border: none;width: 100%;">
+          <template #item="{ item, props }">
+            <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+              <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+                <span :class="item.icon" />
+                <span class="ml-2">{{ item.label }}</span>
+              </a>
+            </router-link>
+            <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
+              <span :class="item.icon" />
+              <span class="ml-2">{{ item.label }}</span>
+            </a>
+          </template>
+        </Menu>
+      </div>
 
         <template #footer>
             <div style="display: flex;justify-content: center; gap: 4px"  v-if="!connected">
@@ -42,24 +41,25 @@
   </div>
 </template>
 
+
 <script setup>
-import { ref } from "vue";
-import { computed } from 'vue';
+import { ref, computed, watch } from "vue";
 import { useAuthStore } from '../../stores/authStore';
 
 const visibleRight = ref(false);
 const authStore = useAuthStore();
 const connected = computed(() => authStore.isTokenValid());
 
-const user = computed(() => {
-  if (connected) {
-    const user = JSON.parse(localStorage.getItem('user'));
-    return user
+watch(connected, (newVal) => {
+  console.log('connected', newVal);
+  if (!newVal) {
+    authStore.logout();
   }
 });
 
 const logout = () => {
   authStore.logout();
+  visibleRight.value = false; 
 };
 
 const items = ref([
@@ -84,33 +84,31 @@ const items = ref([
         route:'/'
     }
 ]);
-
 </script>
 
 
 <style scoped>
-.footer{
+.footer {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
 
-.bottom{
+.bottom {
   position: absolute;
   bottom: 0px;
   border-top: 1px solid grey;
   width: 100%;
 }
 
-.userPersonalInfo{
+.userPersonalInfo {
   display: flex;
   flex-direction: row;
-  gap: 8px
+  gap: 8px;
 }
 
-.content{
+.content {
   overflow-y: auto;
 }
-
 </style>
